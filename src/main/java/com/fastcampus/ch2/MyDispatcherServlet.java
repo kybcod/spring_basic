@@ -32,11 +32,11 @@ public class MyDispatcherServlet extends HttpServlet {
 			Class clazz = Class.forName("com.fastcampus.ch2.YoilTellerMVC");
 			Object obj = clazz.newInstance();
 			
-      			// 1. main메서드의 정보를 얻는다.
+      			// 1. main메서드의 정보를 얻는다. : 모든 메소드를 찾는다. main 메소드가 4개의 파라미터
 			Method main = clazz.getDeclaredMethod("main", int.class, int.class, int.class, Model.class);
 			
       			// 2. main메서드의 매개변수 목록(paramArr)을 읽어서 메서드 호출에 사용할 인자 목록(argArr)을 만든다.
-			Parameter[] paramArr = main.getParameters();
+			Parameter[] paramArr = main.getParameters(); //모든 파라미터의 정보를 반환
 			Object[] argArr = new Object[main.getParameterCount()];
 
 			for(int i=0;i<paramArr.length;i++) {
