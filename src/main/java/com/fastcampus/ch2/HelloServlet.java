@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-// 서블릿의 생명주기
+// 서블릿의 생명주기(초기화, 서비스, 소멸)
 // 서블릿 : 싱글톤(1개의 인스턴스를 만들어 재활용)
 @WebServlet("/hello")
 public class HelloServlet extends HttpServlet{
