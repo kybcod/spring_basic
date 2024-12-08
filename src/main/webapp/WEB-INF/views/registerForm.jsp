@@ -1,5 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.net.URLDecoder"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -69,41 +70,45 @@
     <title>Register</title>
 </head>
 <body>
-   <form action="<c:url value="/ch2/register/save"/>" method="post" onsubmit="return formCheck(this)">
+   <form action="<c:url value="/register/save"/>" method="post" onsubmit="return formCheck(this)">
     <div class="title">Register</div>
-    <div id="msg" class="msg"> </div> 
-    <label for="">ìì´ë</label>
-    <input class="input-field" type="text" name="id" placeholder="8~12ìë¦¬ì ìëìë¬¸ìì ì«ì ì¡°í©" autofocus>
-    <label for="">ë¹ë°ë²í¸</label>
-    <input class="input-field" type="text" name="pwd" placeholder="8~12ìë¦¬ì ìëìë¬¸ìì ì«ì ì¡°í©">
-    <label for="">ì´ë¦</label>
-    <input class="input-field" type="text" name="name" placeholder="íê¸¸ë">
-    <label for="">ì´ë©ì¼</label>
+    <div id="msg" class="msg">
+   	    <c:if test="${not empty param.msg}">
+	        <i class="fa fa-exclamation-circle"> ${URLDecoder.decode(param.msg)}</i>            
+	    </c:if>
+    </div> 
+    <label for="">아이디</label>
+    <input class="input-field" type="text" name="id" placeholder="8~12자리의 영대소문자와 숫자 조합">
+    <label for="">비밀번호</label>
+    <input class="input-field" type="text" name="pwd" placeholder="8~12자리의 영대소문자와 숫자 조합">
+    <label for="">이름</label>
+    <input class="input-field" type="text" name="name" placeholder="홍길동">
+    <label for="">이메일</label>
     <input class="input-field" type="text" name="email" placeholder="example@fastcampus.co.kr"> 
-    <label for="">ìì¼</label>
+    <label for="">생일</label>
     <input class="input-field" type="text" name="birth" placeholder="2020/12/31">
     <div class="sns-chk">
-        <label><input type="checkbox" name="sns" value="facebook"/>íì´ì¤ë¶</label>
-        <label><input type="checkbox" name="sns" value="kakaotalk"/>ì¹´ì¹´ì¤í¡</label>
-        <label><input type="checkbox" name="sns" value="instagram"/>ì¸ì¤íê·¸ë¨</label>
+        <label><input type="checkbox" name="sns" value="facebook"/>페이스북</label>
+        <label><input type="checkbox" name="sns" value="kakaotalk"/>카카오톡</label>
+        <label><input type="checkbox" name="sns" value="instagram"/>인스타그램</label>
     </div>
-    <button>íì ê°ì</button>
+    <button>회원 가입</button>
    </form> 
    <script>
        function formCheck(frm) {
-            var msg ='';
+            let msg ='';
 
             if(frm.id.value.length<3) {
-                setMessage('idì ê¸¸ì´ë 3ì´ìì´ì´ì¼ í©ëë¤.', frm.id);
-                return false;
-            }
-            
-            if(frm.pwd.value.length<3) {
-                setMessage('pwdì ê¸¸ì´ë 3ì´ìì´ì´ì¼ í©ëë¤.', frm.pwd);
+                setMessage('id의 길이는 3이상이어야 합니다.', frm.id);
                 return false;
             }
 
-           return true; // í¼ ì ì¡
+            if(frm.pwd.value.length<3) {
+                setMessage('pwd의 길이는 3이상이어야 합니다.', frm.pwd);
+                return false;
+            }           
+           
+           return true;
        }
 
        function setMessage(msg, element){
