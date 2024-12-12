@@ -1,15 +1,34 @@
 package com.fastcampus.ch2;
 
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
+import org.springframework.core.convert.ConversionException;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller // ctrl+shift+o 자동 임포트
 public class RegisterController {
+	
+	@InitBinder
+	public void toDate(WebDataBinder binder) {
+		ConversionService conversionService = binder.getConversionService();
+		//SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		//binder.registerCustomEditor(Date.class, new CustomDateEditor(df, false));
+		binder.registerCustomEditor(String[].class, new StringArrayPropertyEditor("#"));
+	}
+	
+	
 //	@RequestMapping(value="/register/add", method=RequestMethod.GET) // 신규회원 가입
 	@GetMapping("/register/add") // 4.3부터 추가
 	public String register() {
@@ -19,7 +38,8 @@ public class RegisterController {
 //	@RequestMapping(value="/register/save", method=RequestMethod.POST) // 신규회원 가입
 // 	@PostMapping("/register/save")
 	@PostMapping("/register/add")
-	public String save(@ModelAttribute("user") User user, Model m) throws Exception {
+	public String save(@ModelAttribute("user") User user, Model m, BindingResult result) throws Exception {
+		
 		if (!isValid(user)) {
 			String msg = URLEncoder.encode("id를 잘못입력하셨습니다.", "utf-8");
 
