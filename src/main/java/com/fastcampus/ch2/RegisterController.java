@@ -22,10 +22,11 @@ public class RegisterController {
 	
 	@InitBinder
 	public void toDate(WebDataBinder binder) {
-		ConversionService conversionService = binder.getConversionService();
+		ConversionService conversionService = binder.getConversionService(); // 타입변환
 		//SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		//binder.registerCustomEditor(Date.class, new CustomDateEditor(df, false));
 		binder.registerCustomEditor(String[].class, new StringArrayPropertyEditor("#"));
+		// 문자열 데이터를 '#'을 기준으로 나누어 String 배열로 변환
 	}
 	
 	
