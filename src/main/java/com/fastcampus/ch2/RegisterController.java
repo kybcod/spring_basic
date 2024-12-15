@@ -1,5 +1,7 @@
 package com.fastcampus.ch2;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
@@ -7,6 +9,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -22,7 +25,10 @@ public class RegisterController {
 		//binder.registerCustomEditor(Date.class, new CustomDateEditor(df, false));
 		binder.registerCustomEditor(String[].class, new StringArrayPropertyEditor("#"));
 		// 문자열 데이터를 '#'을 기준으로 나누어 String 배열로 변환
-		binder.setValidator(new UserValidator());
+		//binder.setValidator(new UserValidator());
+		binder.addValidators(new UserValidator());
+		List<Validator> validatorList = binder.getValidators();
+		System.out.println("validatorList : " + validatorList);;
 	}
 	
 	
